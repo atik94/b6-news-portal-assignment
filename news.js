@@ -30,10 +30,10 @@ const displayNews = (news) => {
     const newsList = document.createElement("div");
     newsList.classList.add("col");
     newsList.innerHTML = `<div class="card">
-      <img src=${newsAll.image_url} class="card-img-top" alt="...">
+      <img src=${newsAll.thumbnail_url} class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">${newsAll.title}</h5>
-        <p class="card-text">${newsAll.details}</p>
+        <p class="card-text">${newsAll.details.slice(0, 200)}...</p>
       </div>
       <div class="d-flex justify-content-between">
       <div class="d-flex">
@@ -45,6 +45,10 @@ const displayNews = (news) => {
       </div>
       <h3>${newsAll.total_view}</h3>
       </div>
+      <button onclick="loadNewsDetails('${
+        newsAll._id
+      }')" type="button" href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button>
+      
       `;
     newsContainer.appendChild(newsList);
   });
@@ -57,5 +61,29 @@ const toggleSpinner = (isLoading) => {
   } else {
     loaderSection.classList.add("d-none");
   }
+};
+
+//LoadNewsDetails
+
+const loadNewsDetails = (_id) => {
+  const url = `https://openapi.programming-hero.com/api/news/${_id}`;
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => displayNewsDetails(data.data[0]));
+};
+
+const displayNewsDetails = (newsDetails) => {
+  console.log(newsDetails);
+  const modalTitle = document.getElementById("newsDetailModal");
+  modalTitle.innerText = newsDetails.title;
+  const modalBody = document.getElementById("modalBody");
+  modalBody.innerHTML = `
+   <img style="width:400px; height:200px" src="${newsDetails.image_url}" alt="">
+   <p>${newsDetails.details.slice(0, 100)}</p>
+   <h1>Author: ${newsDetails.author.name ? newsDetails.author.name : "No data found"}</h1>
+   <p>publish date: <small>${newsDetails.author.published_date}</small></p>
+   <img style="width:100px; height:100px"  src="${newsDetails.author.img}" alt="">
+   <h4>Total view: ${newsDetails.total_view ? newsDetails.total_view : "No data found"}</h4>
+  `;
 };
 newsCategory();
