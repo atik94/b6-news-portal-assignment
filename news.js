@@ -23,7 +23,9 @@ const loadCategoryDetails = (id) => {
 };
 
 const displayNews = (news) => {
-  console.log(news.length);
+  console.log(news);
+  news.sort((a, b) => a.total_view - b.total_view);
+  news.reverse();
   const totalNewsShow = document.getElementById("total-news-show");
   totalNewsShow.innerHTML = `<h1>${news.length ? news.length + " News are found" : "No news are found"} </h1>`;
   const newsContainer = document.getElementById("news-container");
@@ -45,7 +47,7 @@ const displayNews = (news) => {
      <p><small>${newsAll.author.published_date}</small></p>
      </div>
       </div>
-      <h3>${newsAll.total_view}</h3>
+      <h3>Total review: ${newsAll.total_view}</h3>
       </div>
       <button onclick="loadNewsDetails('${
         newsAll._id
