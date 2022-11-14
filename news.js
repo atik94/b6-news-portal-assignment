@@ -23,7 +23,9 @@ const loadCategoryDetails = (id) => {
 };
 
 const displayNews = (news) => {
-  console.log(news);
+  console.log(news.length);
+  const totalNewsShow = document.getElementById("total-news-show");
+  totalNewsShow.innerHTML = `<h1>${news.length ? news.length + " News are found" : "No news are found"} </h1>`;
   const newsContainer = document.getElementById("news-container");
   newsContainer.innerHTML = " ";
   news.forEach((newsAll) => {
@@ -54,6 +56,7 @@ const displayNews = (news) => {
   });
   toggleSpinner(false);
 };
+
 const toggleSpinner = (isLoading) => {
   const loaderSection = document.getElementById("loader");
   if (isLoading) {
@@ -79,7 +82,7 @@ const displayNewsDetails = (newsDetails) => {
   const modalBody = document.getElementById("modalBody");
   modalBody.innerHTML = `
    <img style="width:400px; height:200px" src="${newsDetails.image_url}" alt="">
-   <p>${newsDetails.details.slice(0, 100)}</p>
+   <p>${newsDetails.details.slice(0, 200)}</p>
    <h1>Author: ${newsDetails.author.name ? newsDetails.author.name : "No data found"}</h1>
    <p>publish date: <small>${newsDetails.author.published_date}</small></p>
    <img style="width:100px; height:100px"  src="${newsDetails.author.img}" alt="">
