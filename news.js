@@ -47,7 +47,7 @@ const displayNews = (news) => {
      <p><small>${newsAll.author.published_date}</small></p>
      </div>
       </div>
-      <h3>Total review: ${newsAll.total_view}</h3>
+      <h3><i class="fa-solid fa-eye-low-vision"></i> ${newsAll.total_view}</h3>
       </div>
       <button onclick="loadNewsDetails('${
         newsAll._id
@@ -88,7 +88,9 @@ const displayNewsDetails = (newsDetails) => {
    <h1>Author: ${newsDetails.author.name ? newsDetails.author.name : "No data found"}</h1>
    <p>publish date: <small>${newsDetails.author.published_date}</small></p>
    <img style="width:100px; height:100px"  src="${newsDetails.author.img}" alt="">
-   <h4>Total view: ${newsDetails.total_view ? newsDetails.total_view : "No data found"}</h4>
+   <h4>Total view: <i class="fa-solid fa-eye-low-vision"></i> ${
+     newsDetails.total_view ? newsDetails.total_view : "No data found"
+   }</h4>
   `;
 };
 newsCategory();
