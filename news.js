@@ -1,11 +1,10 @@
 const newsCategory = () => {
   fetch(" https://openapi.programming-hero.com/api/news/categories")
     .then((res) => res.json())
-    .then((data) => displayCategory(data.data.news_category));
+    .then((data) => displayCategory(data.data.news_category))
+    .catch((err) => console.log(err));
 };
 const displayCategory = (data) => {
-  console.log(data);
-
   const categoryContainer = document.getElementById("category-container");
   data.forEach((newsCategory) => {
     const categoryList = document.createElement("div");
@@ -19,11 +18,11 @@ const loadCategoryDetails = (id) => {
   toggleSpinner(true);
   fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
     .then((res) => res.json())
-    .then((data) => displayNews(data.data));
+    .then((data) => displayNews(data.data))
+    .catch((err) => console.log(err));
 };
 
 const displayNews = (news) => {
-  console.log(news);
   news.sort((a, b) => a.total_view - b.total_view);
   news.reverse();
   const totalNewsShow = document.getElementById("total-news-show");
@@ -47,7 +46,7 @@ const displayNews = (news) => {
      <p><small>${newsAll.author.published_date}</small></p>
      </div>
       </div>
-      <h3><i class="fa-solid fa-eye-low-vision"></i> ${newsAll.total_view}</h3>
+      <h3><i class="fa-solid fa-eye-low-vision"></i><span class="text-primary">${newsAll.total_view}</span></h3>
       </div>
       <button onclick="loadNewsDetails('${
         newsAll._id
@@ -74,11 +73,11 @@ const loadNewsDetails = (_id) => {
   const url = `https://openapi.programming-hero.com/api/news/${_id}`;
   fetch(url)
     .then((res) => res.json())
-    .then((data) => displayNewsDetails(data.data[0]));
+    .then((data) => displayNewsDetails(data.data[0]))
+    .catch((err) => console.log(err));
 };
 
 const displayNewsDetails = (newsDetails) => {
-  console.log(newsDetails);
   const modalTitle = document.getElementById("newsDetailModal");
   modalTitle.innerText = newsDetails.title;
   const modalBody = document.getElementById("modalBody");
@@ -88,9 +87,9 @@ const displayNewsDetails = (newsDetails) => {
    <h1>Author: ${newsDetails.author.name ? newsDetails.author.name : "No data found"}</h1>
    <p>publish date: <small>${newsDetails.author.published_date}</small></p>
    <img style="width:100px; height:100px"  src="${newsDetails.author.img}" alt="">
-   <h4>Total view: <i class="fa-solid fa-eye-low-vision"></i> ${
+   <h4>Total view: <i class="fa-solid fa-eye-low-vision"></i> <span class="text-primary">${
      newsDetails.total_view ? newsDetails.total_view : "No data found"
-   }</h4>
+   }</span></h4>
   `;
 };
 newsCategory();
